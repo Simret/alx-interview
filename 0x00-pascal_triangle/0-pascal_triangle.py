@@ -2,7 +2,7 @@
 
 def pascal_triangle(n):
     triangle = []
-    if type(n) is not int or n <= 0:
+    if not isinstance(n, int) or n <= 0:
         return triangle
     for i in range(n):
         line = []
