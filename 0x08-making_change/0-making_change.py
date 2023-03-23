@@ -8,16 +8,18 @@ def makeChange(coins, total):
         amount total when given a pile of coins of different values'''
     if total <= 0:
         return 0
-    table = [sys.maxsize for i in range(total + 1)]
-    table[0] = 0
-    m = len(coins)
-    for i in range(1, total + 1):
-        for j in range(m):
-            if coins[j] <= i:
-                subres = table[i - coins[j]]
-                if subres != sys.maxsize and subres + 1 < table[i]:
-                    table[i] = subres + 1
-
-    if table[total] == sys.maxsize:
+    if (coins is None or len(coins) == 0):
         return -1
-    return table[total]
+
+    change = 0
+    available_coins = sorted(coins, reverse=True)
+    change_left = total
+
+    for coin in available_coins:
+        while (change_left % coin >= 0 and change_left >= coin):
+            change += int(change_left / coin)
+            change_left = change_left % coin
+
+    change = change if change_left == 0 else -1
+
+    return change
